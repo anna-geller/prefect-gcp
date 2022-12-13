@@ -24,9 +24,9 @@ inputs:
     required: false
     default: 'us-east1'
   zone:
-    description: 'Zone in the selected GCP region'
+    description: 'GCP region with the zone'
     required: false
-    default: 'b'
+    default: 'us-east1-b'
   machine_type:
     description: 'GCP Compute Engine instance type'
     required: false
