@@ -1,5 +1,8 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Prefect Cloud Deployment to Google Compute Engine'
+branding:
+  icon: box
+  color: blue
+description: 'Test action'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'

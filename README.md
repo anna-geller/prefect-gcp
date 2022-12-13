@@ -1,2 +1,3 @@
 # prefect-gcp
-Custom GitHub Action
+GitHub Action deploying Prefect agent as a container to the Google Compute Engine
+
