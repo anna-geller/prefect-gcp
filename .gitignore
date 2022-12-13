@@ -1,3 +1,12 @@
+# prefect artifacts
+.prefectignore
+
+# MacOS
+.DS_Store
+
+# Dask
+dask-worker-space/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -124,6 +133,10 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
 .pyre/
+
+# Editors
+.idea/
+.vscode/
+.tmp/
+*-deployment.yaml
