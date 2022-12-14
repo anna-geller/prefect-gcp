@@ -123,6 +123,9 @@ runs:
         gh = GitHub(repository="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY", reference="$GITHUB_REF_NAME")
         gh.save("${{ inputs.github_block_name }}", overwrite=True)
         
+        gh = GitHub(repository="https://github.com/anna-geller/prefect-gcp", reference="main")
+        gh.save("demo", overwrite=True)
+        
         block = CloudRunJob(
           image="$IMAGE_URI",
           region="${{ inputs.region }}",
@@ -135,11 +138,11 @@ runs:
         EOF
         python blocks.py
       shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    - run: |
-        prefect deployment build hello.py:hello -n world -sb github/"${{ inputs.github_block_name }}" \
-        -ib cloud-run-job/"${{ inputs.cloudrun_block_name }}" --skip-upload -a
+    - name: Check out demo repo
+      uses: actions/checkout@v3
+      with:
+        repository: anna-geller/prefect-gcp
+    - run: prefect deployment build hello.py:hello -n world -sb github/demo -ib cloud-run-job/"${{ inputs.cloudrun_block_name }}" --skip-upload -a
       shell: bash
     - run: prefect deployment run hello/world
       shell: bash
