@@ -105,7 +105,7 @@ runs:
         python-version: "3.10"
 
     - id: install-prefect
-      run: pip install prefect
+      run: pip install prefect prefect-gcp
       shell: bash
 
     - id: login-prefect
