@@ -121,9 +121,6 @@ runs:
         from prefect_gcp.cloud_run import CloudRunJob
         from prefect_gcp.credentials import GcpCredentials
         
-        gcp = GcpCredentials(service_account_info="${{ inputs.gcp_credentials_json }}")
-        gcp.save("${{ inputs.gcp_creds_block_name }}", overwrite=True)
-        
         gh = GitHub(repository="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY", reference="$GITHUB_REF_NAME")
         gh.save("${{ inputs.github_block_name }}", overwrite=True)
         
