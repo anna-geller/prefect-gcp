@@ -113,7 +113,6 @@ runs:
         prefect config set PREFECT_API_KEY=${{ inputs.prefect_api_key }}
         prefect config set PREFECT_API_URL=${{ inputs.prefect_api_url }}
       shell: bash
-
     - id: create-blocks
       run: |
         cat <<EOF > blocks.py
@@ -135,4 +134,12 @@ runs:
         
         EOF
         python blocks.py
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: |
+        prefect deployment build hello.py:hello -n world -sb github/"${{ inputs.github_block_name }}" \
+        -ib cloud-run-job/"${{ inputs.cloudrun_block_name }}" --skip-upload -a
+      shell: bash
+    - run: prefect deployment run hello/world
       shell: bash
