@@ -31,7 +31,7 @@ gcloud iam service-accounts create $GCP_SA_NAME
 export MEMBER=serviceAccount:"$GCP_SA_NAME"@"$CLOUDSDK_CORE_PROJECT".iam.gserviceaccount.com
 gcloud projects add-iam-policy-binding $CLOUDSDK_CORE_PROJECT --member=$MEMBER --role="roles/run.admin"
 gcloud projects add-iam-policy-binding $CLOUDSDK_CORE_PROJECT --member=$MEMBER --role="roles/compute.instanceAdmin.v1"
-gcloud projects add-iam-policy-binding $CLOUDSDK_CORE_PROJECT --member=$MEMBER --role="roles/artifactregistry.writer"
+gcloud projects add-iam-policy-binding $CLOUDSDK_CORE_PROJECT --member=$MEMBER --role="roles/artifactregistry.admin"
 gcloud projects add-iam-policy-binding $CLOUDSDK_CORE_PROJECT --member=$MEMBER --role="roles/iam.serviceAccountUser"
 
 # create JSON credentials file as follows, then copy-paste its content into your GHA Secret + Prefect GcpCredentials block:
@@ -41,7 +41,7 @@ This will generate the JSON key file, of which contents you can copy and paste i
 
 # What does the action do?
 
-1. It creates an Artifact Registry repository if one doesn't exist yet.
+1. It creates an Artifact Registry repository if one doesn't exist yet. If you don't want this behavior of automatically creating the repository for you if one doesn't exist yet, you can minimize the permissions on your service account from admin to writer: ``"roles/artifactregistry.writer"``
 2. It builds a Docker image and pushes it to that Artifact Registry repository, based on ``Dockerfile.agent`` file existing in your custom repository from which you are using this GitHub Action.
 3. It deploys a VM (if one such VM with the same name already exists, it gets deleted before a new VM gets created) and a Docker container running the agent process.
 
@@ -87,6 +87,14 @@ inputs:
     default: prefect
   github_block_name:
     description: 'Name of the GitHub block'
+    required: false
+    default: default
+  gcp_creds_block_name:
+    description: 'Name of the GcpCredentials block'
+    required: false
+    default: default
+  cloudrun_block_name:
+    description: 'Name of the CloudRunJob block'
     required: false
     default: default
 ```
