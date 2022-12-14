@@ -80,7 +80,7 @@ runs:
 
     - id: build-image
       run: |
-        docker build --build-arg PREFECT_API_KEY=${{ inputs.prefect_api_key }} --build-arg PREFECT_API_URL=${{ inputs.prefect_api_url }} -t "${{ env.IMAGE_URI }}" -f Dockerfile.agent .
+        docker build --build-arg PREFECT_API_KEY=${{ inputs.prefect_api_key }} --build-arg PREFECT_API_URL=${{ inputs.prefect_api_url }} -t "${{ env.IMAGE_URI }}" -f Dockerfile .
         docker push "${{ env.IMAGE_URI }}"
       shell: bash
 
